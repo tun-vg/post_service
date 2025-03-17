@@ -1,0 +1,17 @@
+C:\Users\Admin\source\repos\sadtime\PostService\Post.Application\bin\Debug\net8.0\Post.Application.deps.json
+C:\Users\Admin\source\repos\sadtime\PostService\Post.Application\bin\Debug\net8.0\Post.Application.dll
+C:\Users\Admin\source\repos\sadtime\PostService\Post.Application\bin\Debug\net8.0\Post.Application.pdb
+C:\Users\Admin\source\repos\sadtime\PostService\Post.Application\bin\Debug\net8.0\Post.Contract.dll
+C:\Users\Admin\source\repos\sadtime\PostService\Post.Application\bin\Debug\net8.0\Post.Contract.pdb
+C:\Users\Admin\source\repos\sadtime\PostService\Post.Application\obj\Debug\net8.0\Post.Application.csproj.AssemblyReference.cache
+C:\Users\Admin\source\repos\sadtime\PostService\Post.Application\obj\Debug\net8.0\Post.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Admin\source\repos\sadtime\PostService\Post.Application\obj\Debug\net8.0\Post.Application.AssemblyInfoInputs.cache
+C:\Users\Admin\source\repos\sadtime\PostService\Post.Application\obj\Debug\net8.0\Post.Application.AssemblyInfo.cs
+C:\Users\Admin\source\repos\sadtime\PostService\Post.Application\obj\Debug\net8.0\Post.Application.csproj.CoreCompileInputs.cache
+C:\Users\Admin\source\repos\sadtime\PostService\Post.Application\obj\Debug\net8.0\Post.App.A977458D.Up2Date
+C:\Users\Admin\source\repos\sadtime\PostService\Post.Application\obj\Debug\net8.0\Post.Application.dll
+C:\Users\Admin\source\repos\sadtime\PostService\Post.Application\obj\Debug\net8.0\refint\Post.Application.dll
+C:\Users\Admin\source\repos\sadtime\PostService\Post.Application\obj\Debug\net8.0\Post.Application.pdb
+C:\Users\Admin\source\repos\sadtime\PostService\Post.Application\obj\Debug\net8.0\ref\Post.Application.dll
+C:\Users\Admin\source\repos\sadtime\PostService\Post.Application\bin\Debug\net8.0\Post.Domain.dll
+C:\Users\Admin\source\repos\sadtime\PostService\Post.Application\bin\Debug\net8.0\Post.Domain.pdb

@@ -1,0 +1,11 @@
+C:\Users\Admin\source\repos\sadtime\PostService\Post.Infrastructure\bin\Debug\net8.0\Post.Infrastructure.deps.json
+C:\Users\Admin\source\repos\sadtime\PostService\Post.Infrastructure\bin\Debug\net8.0\Post.Infrastructure.dll
+C:\Users\Admin\source\repos\sadtime\PostService\Post.Infrastructure\bin\Debug\net8.0\Post.Infrastructure.pdb
+C:\Users\Admin\source\repos\sadtime\PostService\Post.Infrastructure\obj\Debug\net8.0\Post.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Admin\source\repos\sadtime\PostService\Post.Infrastructure\obj\Debug\net8.0\Post.Infrastructure.AssemblyInfoInputs.cache
+C:\Users\Admin\source\repos\sadtime\PostService\Post.Infrastructure\obj\Debug\net8.0\Post.Infrastructure.AssemblyInfo.cs
+C:\Users\Admin\source\repos\sadtime\PostService\Post.Infrastructure\obj\Debug\net8.0\Post.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\Admin\source\repos\sadtime\PostService\Post.Infrastructure\obj\Debug\net8.0\Post.Infrastructure.dll
+C:\Users\Admin\source\repos\sadtime\PostService\Post.Infrastructure\obj\Debug\net8.0\refint\Post.Infrastructure.dll
+C:\Users\Admin\source\repos\sadtime\PostService\Post.Infrastructure\obj\Debug\net8.0\Post.Infrastructure.pdb
+C:\Users\Admin\source\repos\sadtime\PostService\Post.Infrastructure\obj\Debug\net8.0\ref\Post.Infrastructure.dll
