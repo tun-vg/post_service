@@ -10,6 +10,11 @@ public class PagedResult<T>
     public const int DefaultPageSize = 10;
     public const int DefaultPageIndex = 1;
 
+    public PagedResult()
+    {
+
+    }
+
     private PagedResult(List<T> items, int pageIndex, int pageSize, int totalCount)
     {
         Items = items;
@@ -18,13 +23,13 @@ public class PagedResult<T>
         TotalCount = totalCount;
     }
 
-    public List<T> Items { get; }
+    public List<T> Items { get; set; }
 
-    public int PageIndex { get; }
+    public int PageIndex { get; set; }
 
-    public int PageSize { get; }
+    public int PageSize { get; set; }
 
-    public int TotalCount { get; }
+    public int TotalCount { get; set; }
 
     public bool HasNextPage => PageIndex * PageSize < TotalCount;
 
@@ -44,4 +49,7 @@ public class PagedResult<T>
 
     public static PagedResult<T> Create(List<T> items, int pageIndex, int pageSize, int totalCount)
         => new(items, pageIndex, pageSize, totalCount);
+
+    public static PagedResult<T> Create(List<T> items, int size)
+        => new(items, DefaultPageIndex, size, items.Count);
 }

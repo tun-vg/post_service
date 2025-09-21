@@ -18,10 +18,58 @@ public class PostRepository : IPostRepository
         _context = context;
     }
 
-    public async Task<List<Post.Domain.Entities.Post>> GetPostByPage()
+    public async Task<(List<Post.Domain.Entities.Post>, int)> GetPostByPage(int page, int pageSize, string? search, string? sortBy, bool isDescending)
     {
-        List<Post.Domain.Entities.Post> result = await _context.Posts.ToListAsync();
-        return result;
+        var query = _context.Posts.AsQueryable();
+
+        if (!string.IsNullOrEmpty(search))
+        {
+            query = query.Where(p => p.Title.Contains(search));
+        }
+        
+        int totalCount = await query.CountAsync();
+
+        if (!string.IsNullOrEmpty(sortBy))
+        {
+            var propertyInfo = typeof(Post.Domain.Entities.Post).GetProperty(
+                sortBy, 
+                System.Reflection.BindingFlags.IgnoreCase | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance
+            );
+            if (propertyInfo != null)
+            {
+                query = isDescending
+                    ? query.OrderByDescending(e => EF.Property<object>(e, sortBy))
+                    : query.OrderBy(e => EF.Property<object>(e, sortBy));
+            }
+        }
+        else
+        {
+            query = query.OrderBy(e => e.CreatedAt);
+        }
+
+        var result = await query
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .Select(p => new Post.Domain.Entities.Post
+            {
+                PostId = p.PostId,
+                Title = p.Title,
+                Slug = p.Slug,
+                Content = p.Content,
+                AuthorId = p.AuthorId,
+                CategoryId = p.CategoryId,
+                Approved = p.Approved,
+                Point = p.Point,
+                UpPoint = p.UpPoint,
+                DownPoint = p.DownPoint,
+                ViewCount = p.ViewCount,
+                ReadingTime = p.ReadingTime,
+                Status = p.Status,
+                CreatedAt = p.CreatedAt,
+                UpdatedAt = p.UpdatedAt
+            })
+            .ToListAsync();
+        return (result, totalCount);
     }
 
     public async Task<Post.Domain.Entities.Post> GetPostById(Guid id)
@@ -60,10 +108,52 @@ public class PostRepository : IPostRepository
             entity.Slug = post.Slug;
             entity.Content = post.Content;
             entity.CategoryId = post.CategoryId;
-            entity.UpdatedDate = DateTime.Now;
+            entity.UpdatedAt = DateTime.Now;
 
             await _context.SaveChangesAsync();
         }
         else throw new Exception($"Coun't found post by id: {post.PostId}");
+    }
+
+    public async Task<List<Post.Domain.Entities.Post>> SearchPost(string searchText)
+    {
+        var posts = await _context.Posts
+        .Where(p => p.Title.Contains(searchText))
+        .Select(p => new Post.Domain.Entities.Post
+        {
+            PostId = p.PostId,
+            Title = p.Title,
+            Slug = p.Slug,
+            Content = p.Content,
+            AuthorId = p.AuthorId,
+            CategoryId = p.CategoryId
+        })
+        .ToListAsync();
+
+        var postIds = posts.Select(p => p.PostId).ToList();
+
+        var postTags = await (from pt in _context.PostTags
+                              join t in _context.Tags on pt.TagId equals t.TagId
+                              where postIds.Contains(pt.PostId)
+                              select new PostTag
+                              {
+                                  PostTagId = pt.PostTagId,
+                                  PostId = pt.PostId,
+                                  TagId = t.TagId,
+                                  TagName = t.Name
+                              }).ToListAsync();
+
+        foreach (var post in posts)
+        {
+            post.PostTags = postTags.Where(pt => pt.PostId == post.PostId).ToList();
+        }
+
+        return posts;
+    }
+
+    public async Task<List<Post.Domain.Entities.Post>> GetPostsTrending(int month, int year, int size)
+    {
+        var posts = await _context.Posts.Take(size).ToListAsync();
+        return posts;
     }
 }

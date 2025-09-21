@@ -12,5 +12,9 @@ public class Category
 
     public string Name { get; set; } = string.Empty;
 
-    public IEnumerable<Post> Posts { get; set; } = new List<Post>();
+    public string Slug { get; set; } = string.Empty;
+
+    public ICollection<Post> Posts { get; set; } = new List<Post>();
+
+    public ICollection<Tag> Tags { get; set; } = new List<Tag>();
 }

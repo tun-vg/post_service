@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Post.Domain.Entities;
 
-public class Post
+public class Post : BaseEntity
 {
+    [Key]
     public Guid PostId { get; set; }
 
     public string Title { get; set; } = string.Empty;
@@ -22,17 +24,27 @@ public class Post
 
     public Category? Category { get; set; }
 
-    public IEnumerable<PostTag> PostTags { get; set; } = new List<PostTag>();
+    public bool Approved { get; set; }
 
-    public IEnumerable<Comment> Comments { get; set; } = new List<Comment>();
+    public int Point { get; set; }
 
-    public DateTime CreatedDate { get; set; }
+    public int UpPoint { get; set; }
 
-    public DateTime UpdatedDate { get; set; }
+    public int DownPoint { get; set; }
+
+    public int ViewCount { get; set; }
+
+    public double ReadingTime { get; set; }
+
+    public byte Status { get; set; }
+
+    public ICollection<PostTag> PostTags { get; set; } = new List<PostTag>();
+
+    public ICollection<Comment> Comments { get; set; } = new List<Comment>();
 
     public Post() { }
 
-    public Post(Guid postId, string title, string slug, string content, Guid authorId, Guid categoryId, Category? category, IEnumerable<PostTag> postTags, IEnumerable<Comment> comments, DateTime createdDate, DateTime updatedDate)
+    public Post(Guid postId, string title, string slug, string content, Guid authorId, Guid categoryId, bool approved, int point, int upPoint, int downPoint, int viewCount, double readingTime, byte status, DateTime? updateAt)
     {
         PostId = postId;
         Title = title;
@@ -40,10 +52,14 @@ public class Post
         Content = content;
         AuthorId = authorId;
         CategoryId = categoryId;
-        Category = category;
-        PostTags = postTags;
-        Comments = comments;
-        CreatedDate = createdDate;
-        UpdatedDate = updatedDate;
+        Approved = approved;
+        Point = point;
+        UpPoint = upPoint;
+        DownPoint = downPoint;
+        ViewCount = viewCount;
+        ReadingTime = readingTime;
+        Status = status;
+        base.CreatedAt = DateTime.UtcNow;
+        base.UpdatedAt = updateAt;
     }
 }

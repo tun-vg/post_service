@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Post.Domain.Entities;
 
-public class Comment
+public class Comment : BaseEntity
 {
     public Guid CommentId { get; set; }
 

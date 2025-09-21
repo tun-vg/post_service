@@ -17,6 +17,7 @@ public class ApplicationDBContext : DbContext
     {
         if (!optionsBuilder.IsConfigured)
         {
+            // đoạn này để nếu không có config db ở startup của Post.API thì nó sẽ tự động config
             optionsBuilder.UseMySql("Server=localhost;Database=post_service;User=root;Password=123456;",
                 new MySqlServerVersion(new Version(8, 0, 23)));
         }
