@@ -3,6 +3,7 @@ using Post.Application;
 using Post.Contract;
 using Post.Contract.Repositories;
 using Post.Infrastructure;
+using Post.Infrastructure.Services;
 using Post.Persistence;
 using Post.Persistence.Repositories;
 
@@ -48,8 +49,13 @@ builder.Services.AddCors(options =>
                    .AllowAnyHeader();
         });
 });
+builder.Services.AddGrpc();
+
 
 var app = builder.Build();
+
+app.MapGrpcService<PostGrpcService>();
+app.MapGet("/", () => "This is gRPC PostService");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -57,6 +63,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 
 app.UseCors("AllowAllOrigins");
 

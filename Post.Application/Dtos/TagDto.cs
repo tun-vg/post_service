@@ -8,7 +8,11 @@ namespace Post.Application.Dtos;
 
 public class TagDto
 {
-    public Guid? TagId { get; set; }
+    public Guid TagId { get; set; } = Guid.Empty;
+
+    public Guid? CategoryId { get; set; }
+
+    public string? CategoryName { get; set; }
 
     public string Name { get; set; } = string.Empty;
 

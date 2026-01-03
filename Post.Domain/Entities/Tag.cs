@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,16 +22,20 @@ public class Tag
     public Guid CategoryId { get; set; }
 
     public Category? Category { get; set; }
+    
+    [NotMapped]
+    public string CategoryName { get; set; } = string.Empty;
 
     public Tag()
     {
 
     }
 
-    public Tag(Guid tagid ,string name, string slug)
+    public Tag(Guid tagid ,string name, string slug, string categoryName)
     {
         TagId = tagid;
         Name = name;
         Slug = slug;
+        CategoryName = categoryName;
     }
 }

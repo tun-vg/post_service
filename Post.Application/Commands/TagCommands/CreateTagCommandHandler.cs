@@ -27,7 +27,8 @@ public class CreateTagCommandHandler : IRequestHandler<CreateTagCommand, Result>
         {
             TagId = new Guid(),
             Name = request.Name,
-            Slug = request.Slug
+            Slug = request.Slug,
+            CategoryId = request.CategoryId
         };
         await _tagRepository.SaveTag(tag);
         TagDto tagDto = _mapper.Map<TagDto>(tag);

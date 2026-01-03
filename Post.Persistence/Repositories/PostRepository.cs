@@ -156,4 +156,28 @@ public class PostRepository : IPostRepository
         var posts = await _context.Posts.Take(size).ToListAsync();
         return posts;
     }
+
+    public async Task<(List<Post.Domain.Entities.Post>, int)> GetPostsByUserId(int page, int pageSize, string userId)
+    {
+        var posts = await _context.Posts
+            .Where(p => p.AuthorId.ToString() == userId)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+        var totalCount = await _context.Posts.CountAsync(p => p.AuthorId.ToString() == userId);
+        return (posts, totalCount);
+    }
+
+    public async Task<(List<Post.Domain.Entities.Post>, int)> SearchPost(string search, int page, int pageSize)
+    {
+        var posts = await _context.Posts
+            .Where(p => p.Title.Contains(search))
+            .AsNoTracking()
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
+        var totalCount = await _context.Posts.AsNoTracking().CountAsync(p => p.Title.Contains(search));
+        return (posts, totalCount);
+    }
 }

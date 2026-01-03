@@ -14,10 +14,11 @@ public class CategoryRepository : ICategoryRepository
         _context = context;
     }
 
-    public async Task<List<Category>> GetAll()
+    public async Task<(List<Category>, int)> GetAll()
     {
         var categories = await _context.Categories.ToListAsync();
-        return categories;
+        int count = categories.Count;
+        return (categories, count);
     }
 
     public async Task<Category> GetById(Guid id)

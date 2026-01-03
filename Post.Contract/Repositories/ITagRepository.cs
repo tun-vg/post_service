@@ -14,8 +14,12 @@ public interface ITagRepository
     Task<Tag?> GetTagById(Guid tagId);
 
     Task SaveTag(Tag tag);
+    
+    Task SaveTags(List<Tag> tags);
 
     Task UpdateTag(Tag tag);
 
     Task DeleteTag(Guid tagId);
+
+    Task<(List<Tag>, int)> GetTagsByCategoryId(Guid categoryId);
 }

@@ -30,16 +30,26 @@ public class ProfileMapper : AutoMapper.Profile
             .ForMember(dest => dest.ViewCount, opt => opt.MapFrom(src => src.ViewCount));
 
         CreateMap<Tag, TagDto>()
-            .ForMember(TagDto => TagDto.TagId, opt => opt.MapFrom(src => src.TagId))
-            .ForMember(TagDto => TagDto.Name, opt => opt.MapFrom(src => src.Name))
-            .ForMember(TagDto => TagDto.Slug, opt => opt.MapFrom(src => src.Slug));
+            .ForMember(tagDto => tagDto.TagId, opt => opt.MapFrom(src => src.TagId))
+            .ForMember(tagDto => tagDto.Name, opt => opt.MapFrom(src => src.Name))
+            .ForMember(tagDto => tagDto.Slug, opt => opt.MapFrom(src => src.Slug))
+            .ForMember(tagDto => tagDto.CategoryId, opt => opt.MapFrom(src => src.CategoryId))
+            .ForMember(tagDto => tagDto.CategoryName, opt => opt.MapFrom(src => src.CategoryName));
 
+        CreateMap<TagDto, Tag>()
+            .ForMember(tag => tag.TagId, opt => opt.MapFrom(src => src.TagId))
+            .ForMember(tag => tag.Name, opt => opt.MapFrom(src => src.Name))
+            .ForMember(tag => tag.Slug, opt => opt.MapFrom(src => src.Slug))
+            .ForMember(tag => tag.CategoryId, opt => opt.MapFrom(src => src.CategoryId));
+        
         CreateMap<Category, CategoryDto>()
             .ForMember(c => c.CategoryId, opt => opt.MapFrom(src => src.CategoryId))
-            .ForMember(c => c.Name, opt => opt.MapFrom(src => src.Name));
+            .ForMember(c => c.Name, opt => opt.MapFrom(src => src.Name))
+            .ForMember(c => c.Tags, opt => opt.MapFrom(src => src.Tags));
 
         CreateMap<CategoryDto, Category>()
             .ForMember(c => c.CategoryId, opt => opt.MapFrom(src => src.CategoryId))
-            .ForMember(c => c.Name, opt => opt.MapFrom(src => src.Name));
+            .ForMember(c => c.Name, opt => opt.MapFrom(src => src.Name))
+            .ForMember(c => c.Tags, opt => opt.MapFrom(src => src.Tags));
     }
 }

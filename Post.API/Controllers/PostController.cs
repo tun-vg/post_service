@@ -7,7 +7,7 @@ using Post.Application.Queries.PostQueries;
 namespace Post.API.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("[controller]")]
 public class PostController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -43,7 +43,6 @@ public class PostController : ControllerBase
         var command = new CreatePostCommand
         {
             Title = dto.Title,
-            Slug = dto.Slug,
             Content = dto.Content,
             AuthorId = dto.AuthorId,
             CategoryId = dto.CategoryId,
@@ -78,6 +77,31 @@ public class PostController : ControllerBase
     public async Task<IActionResult> GetTopPosts([FromQuery] int month, [FromQuery] int year, [FromQuery] int size)
     {
         var result = await _mediator.Send(new GetPostsTrendingQuery(month, year, size));
+        return Ok(result);
+    }
+
+    [HttpGet("get-posts-by-userId")]
+    public async Task<IActionResult> GetPostsByUserId([FromQuery] int page, [FromQuery] int pageSize, [FromQuery] string userId)
+    {
+        var result = await _mediator.Send(new GetPostsByUserIdQuery(page, pageSize, userId));
+        return Ok(result);
+    }
+
+    [HttpGet("search")]
+    public async Task<IActionResult> Search([FromQuery] string search,
+                                            [FromQuery] string type,
+                                            [FromQuery] int page,
+                                            [FromQuery] int pageSize)
+    {
+        var query = new SearchPostsQuery
+        {
+            Search = search,
+            Type = type,
+            Page = page,
+            PageSize = pageSize
+        };
+
+        var result = await _mediator.Send(query);
         return Ok(result);
     }
 }

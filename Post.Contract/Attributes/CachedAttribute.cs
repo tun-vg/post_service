@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Post.Contract.Attributes;
 
-[AttributeUsage(AttributeTargets.Class, Inherited =false)]
+[AttributeUsage(AttributeTargets.Class, Inherited = false)]
 public class CachedAttribute : Attribute
 {
     public string CacheKeyTemplate { get; }

@@ -9,9 +9,12 @@ public class CreateTagCommand : IRequest<Result>
 
     public string Slug { get; set; } = string.Empty;
 
-    public CreateTagCommand(string name, string slug)
+    public Guid CategoryId { get; set; }
+
+    public CreateTagCommand(string name, string slug, Guid categoryId)
     {
         Name = name;
         Slug = slug;
+        CategoryId = categoryId;
     }
 }

@@ -7,13 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Duende.AccessTokenManagement" Version="4.0.1" />
     <PackageReference Include="Google.Protobuf" Version="3.31.1" />
+    <PackageReference Include="Grpc.AspNetCore.Server" Version="2.71.0" />
     <PackageReference Include="Grpc.Net.Client" Version="2.71.0" />
     <PackageReference Include="Grpc.Tools" Version="2.72.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.5" />
+    <PackageReference Include="Keycloak.AuthServices.Sdk" Version="2.7.0" />
+    <PackageReference Include="Keycloak.AuthServices.Sdk.Kiota" Version="26.3.3" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.8" />
     <PackageReference Include="StackExchange.Redis" Version="2.8.37" />
   </ItemGroup>
 
@@ -23,6 +27,7 @@
 
 	<ItemGroup>
 		<Protobuf Include="Protos\file_service.proto" GrpcServices="Client" />
+		<Protobuf Include="Protos\post_service.proto" GrpcServices="Server" />
 	</ItemGroup>
 
 </Project>

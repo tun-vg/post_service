@@ -11,7 +11,7 @@ using Post.Contract.Repositories;
 
 namespace Post.Application.Queries.CategoryQueries;
 
-public class GetCategoriesQueryHandler : IRequestHandler<GetCategoriesQuery, Result>
+public class GetCategoriesQueryHandler : IRequestHandler<GetCategoriesQuery, PagedResult<CategoryDto>>
 {
     private readonly ICategoryRepository _categoryRepository;
     private readonly IMapper _mapper;
@@ -22,9 +22,10 @@ public class GetCategoriesQueryHandler : IRequestHandler<GetCategoriesQuery, Res
         _mapper = mapper;
     }
 
-    public async Task<Result> Handle(GetCategoriesQuery request, CancellationToken cancellationToken)
+    public async Task<PagedResult<CategoryDto>> Handle(GetCategoriesQuery request, CancellationToken cancellationToken)
     {
-        var categories = await _categoryRepository.GetAll();
-        return Result.Success(_mapper.Map<List<CategoryDto>>(categories));
+        var (categories, count) = await _categoryRepository.GetAll();
+        var categoryDtos = _mapper.Map<List<CategoryDto>>(categories);
+        return PagedResult<CategoryDto>.Create(categoryDtos, count);
     }
 }

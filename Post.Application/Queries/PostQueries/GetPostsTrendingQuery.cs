@@ -10,7 +10,7 @@ using Post.Contract.Attributes;
 
 namespace Post.Application.Queries.PostQueries;
 
-[Cached("postsTrending:month={Month}:year={Year}:size={Size}", 600)]
+[Cached("posts-trending:month={Month}:year={Year}:size={Size}", 600)]
 public class GetPostsTrendingQuery : IRequest<PagedResult<PostDto>>
 {
     public int Month { get; set; }

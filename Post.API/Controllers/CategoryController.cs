@@ -7,7 +7,7 @@ using Post.Application.Queries.CategoryQueries;
 namespace Post.API.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("[controller]")]
 public class CategoryController : ControllerBase
 {
 
@@ -17,7 +17,7 @@ public class CategoryController : ControllerBase
     {
         _mediator = mediator;
     }
-
+    
     [HttpGet]
     public async Task<IActionResult> GetCategories()
     {

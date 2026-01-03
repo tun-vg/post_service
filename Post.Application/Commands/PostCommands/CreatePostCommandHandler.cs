@@ -49,25 +49,29 @@ public class CreatePostCommandHandler : IRequestHandler<CreatePostCommand, Resul
         string? imageUrl = null;
 
         imageUrl = command.ImageBytes.Length > 0
-            ? await _fileGrpcClient.UploadAsync(command.ImageBytes, command.ImageFileName, "posts", $"post-{post.PostId}")
+            ? await _fileGrpcClient.UploadAsync(command.ImageBytes, command.ImageFileName ?? "", "posts", $"post-{post.PostId}")
             : null;
 
         List<PostTag> postTags = new List<PostTag>();
-        foreach (var tagId in command.PostTags)
+        foreach (var tagDto in command.PostTags)
         {
-            Tag? tag = await _tagRepository.GetTagById(tagId);
-            postTags.Add(new PostTag
+            Tag? tag = await _tagRepository.GetTagById(tagDto.TagId);
+            if (tag != null)
             {
-                PostId = post.PostId,
-                TagId = tagId,
-                TagName = tag != null ? tag.Name : ""
-            });
+                postTags.Add(new PostTag
+                {
+                    PostId = post.PostId,
+                    TagId = tag!.TagId,
+                    TagName = tag != null ? tag.Name : ""
+                });
+            }
         }
         await _postTagRepository.SavePostTag(postTags);
 
         PostDto postDto = _mapper.Map<PostDto>(post);
         postDto.ImageUrl = imageUrl;
-
+        var postTagDtos = _mapper.Map<List<PostTag>>(postTags);
+        postDto.PostTags = postTagDtos;
         return Result.Success(postDto);
     }
 

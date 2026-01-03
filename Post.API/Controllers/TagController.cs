@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Post.API.Controllers;
 
-[Route("/api/[controller]")]
+[Route("[controller]")]
 public class TagController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -66,6 +66,14 @@ public class TagController : ControllerBase
     {
         DeleteTagCommand command = new DeleteTagCommand(id);
         var result = await _mediator.Send(command);
+        return Ok(result);
+    }
+
+    [HttpGet("get-tags-by-category/{categoryId}")]
+    public async Task<IActionResult> GetTagsByCategoryId(Guid categoryId)
+    {
+        GetTagsByCategoryIdQuery query = new GetTagsByCategoryIdQuery(categoryId);
+        var result = await _mediator.Send(query);
         return Ok(result);
     }
 }

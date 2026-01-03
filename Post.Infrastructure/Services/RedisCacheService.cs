@@ -12,6 +12,14 @@ namespace Post.Infrastructure.Services;
 
 public class RedisCacheService : ICacheService
 {
+    private static readonly JsonSerializerOptions CacheJsonOptions =
+    new()
+    {
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        PropertyNameCaseInsensitive = true
+    };
+
+
     private readonly IDatabase _cache;
     //private readonly JsonSerializerOptions _jsonSerializerOptions;
 
@@ -28,13 +36,13 @@ public class RedisCacheService : ICacheService
         {
             return default;
         }
-        var result = JsonSerializer.Deserialize<T>(value);
+        var result = JsonSerializer.Deserialize<T>(value, CacheJsonOptions);
         return result;
     }
 
     public async Task SetAsync<T>(string key, T value, TimeSpan? expiration = null)
     {
-        var json = JsonSerializer.Serialize(value);
+        var json = JsonSerializer.Serialize(value, CacheJsonOptions);
         await _cache.StringSetAsync(key, json, expiration);
     }
 

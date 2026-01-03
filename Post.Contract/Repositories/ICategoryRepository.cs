@@ -4,7 +4,7 @@ namespace Post.Contract.Repositories;
 
 public interface ICategoryRepository
 {
-    Task<List<Category>> GetAll();
+    Task<(List<Category>, int)> GetAll();
     
     Task<Category> GetById(Guid id);
     
