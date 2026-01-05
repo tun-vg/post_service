@@ -23,5 +23,5 @@ public interface IPostRepository
 
     Task<(List<Post.Domain.Entities.Post>, int)> GetPostsByUserId(int page, int pageSize, string userId);
 
-    Task<(List<Post.Domain.Entities.Post>, int)> SearchPost(string search, int page, int pageSize);
+    Task<(List<Post.Domain.Entities.Post>, int)> SearchPost(string search, string type, int page, int pageSize);
 }

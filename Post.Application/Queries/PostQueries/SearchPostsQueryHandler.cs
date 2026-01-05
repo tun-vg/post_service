@@ -25,16 +25,17 @@ public class SearchPostsQueryHandler : IRequestHandler<SearchPostsQuery, PagedRe
 
     public async Task<PagedResult<Object>> Handle(SearchPostsQuery query, CancellationToken cancellationToken)
     {
-        if (query.Type.ToLower() == "post")
+        if (query.Type.ToLower() == "post" || query.Type.ToLower() == "tag")
         {
-            var (posts, count) = await _postRepository.SearchPost(query.Search, query.Page, query.PageSize);
+            var (posts, count) = await _postRepository.SearchPost(query.Search, query.Type, query.Page, query.PageSize);
             var postDtos = _mapper.Map<List<Object>>(posts);
             return PagedResult<Object>.Create(postDtos, query.Page, query.PageSize, count);
         }
         else if (query.Type.ToLower() == "user")
         {
             // call to user service to search users by grpc
-            throw new NotImplementedException("User search is not implemented.");
+            //throw new NotImplementedException("User search is not implemented.");
+            return PagedResult<Object>.Create(new List<object> { }, 0);
         }
         else
         {

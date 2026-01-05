@@ -26,13 +26,13 @@ public class PostRepository : IPostRepository
         {
             query = query.Where(p => p.Title.Contains(search));
         }
-        
+
         int totalCount = await query.CountAsync();
 
         if (!string.IsNullOrEmpty(sortBy))
         {
             var propertyInfo = typeof(Post.Domain.Entities.Post).GetProperty(
-                sortBy, 
+                sortBy,
                 System.Reflection.BindingFlags.IgnoreCase | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance
             );
             if (propertyInfo != null)
@@ -168,16 +168,54 @@ public class PostRepository : IPostRepository
         return (posts, totalCount);
     }
 
-    public async Task<(List<Post.Domain.Entities.Post>, int)> SearchPost(string search, int page, int pageSize)
+    public async Task<(List<Post.Domain.Entities.Post>, int)> SearchPost(string search, string type, int page, int pageSize)
     {
-        var posts = await _context.Posts
-            .Where(p => p.Title.Contains(search))
-            .AsNoTracking()
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync();
+        if (type == "post")
+        {
+            var posts = await _context.Posts
+                .Where(p => p.Title.Contains(search))
+                .AsNoTracking()
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
 
-        var totalCount = await _context.Posts.AsNoTracking().CountAsync(p => p.Title.Contains(search));
-        return (posts, totalCount);
+            var totalCount = await _context.Posts.AsNoTracking().CountAsync(p => p.Title.Contains(search));
+            return (posts, totalCount);
+        } 
+        else
+        {
+            var query = from p in _context.Posts
+                    join pt in _context.PostTags on p.PostId equals pt.PostId
+                    join t in _context.Tags on pt.TagId equals t.TagId
+                    where t.Name.Contains(search)
+                    select new Post.Domain.Entities.Post
+                    {
+                        PostId = p.PostId,
+                        Title = p.Title,
+                        Slug = p.Slug,
+                        Content = p.Content,
+                        AuthorId = p.AuthorId,
+                        CategoryId = p.CategoryId,
+                        Approved = p.Approved,
+                        Point = p.Point,
+                        UpPoint = p.UpPoint,
+                        DownPoint = p.DownPoint,
+                        ViewCount = p.ViewCount,
+                        ReadingTime = p.ReadingTime,
+                        Status = p.Status,
+                        CreatedAt = p.CreatedAt,
+                        UpdatedAt = p.UpdatedAt
+                    };
+
+            var result = await query
+                .AsNoTracking()
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            int totalCount = await query.AsNoTracking().CountAsync();
+
+            return (result, totalCount);
+        }
     }
 }
